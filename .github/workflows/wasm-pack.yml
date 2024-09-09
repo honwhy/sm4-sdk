@@ -7,12 +7,13 @@ on:
 
 env:
   TAG_NAME: ${{ github.ref }}
-  SM4_SDK_KEY: ${{ secrets.SM4_SDK_KEY }}
-  SM4_SDK_IV: ${{ secrets.SM4_SDK_IV }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SM4_SDK_KEY: ${{ secrets.SM4_SDK_KEY }}
+      SM4_SDK_IV: ${{ secrets.SM4_SDK_IV }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -29,7 +30,7 @@ jobs:
         with:
           # Optional version of wasm-pack to install(eg. 'v0.9.1', 'latest')
           version: 'latest'
-          
+
       - name: Build with wasm-pack
         run: wasm-pack build --target web --out-dir pkg --out-name sm4_sdk --release
 
