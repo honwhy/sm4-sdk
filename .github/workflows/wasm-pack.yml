@@ -20,7 +20,7 @@ jobs:
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly-2018-12-27
           profile: minimal
           components: rustfmt, clippy, wasm-pack
           override: true
