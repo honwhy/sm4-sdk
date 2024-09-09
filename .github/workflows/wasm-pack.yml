@@ -20,11 +20,16 @@ jobs:
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly-2018-12-27
+          toolchain: stable
           profile: minimal
-          components: rustfmt, clippy, wasm-pack
+          components: rustfmt, clippy
           override: true
-
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          # Optional version of wasm-pack to install(eg. 'v0.9.1', 'latest')
+          version: 'latest'
+          
       - name: Build with wasm-pack
         run: wasm-pack build --target web --out-dir pkg --out-name sm4_sdk --release
 
