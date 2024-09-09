@@ -11,9 +11,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SM4_SDK_KEY: ${{ secrets.SM4_SDK_KEY }}
-      SM4_SDK_IV: ${{ secrets.SM4_SDK_IV }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -25,6 +22,12 @@ jobs:
           profile: minimal
           components: rustfmt, clippy
           override: true
+      - name: create env file
+        run: |
+          touch .env
+          echo SM4_SDK_KEY=${{ secrets.SM4_SDK_KEY }} >> .env
+          echo SM4_SDK_IV=${{ secrets.SM4_SDK_IV }} >> .env
+
       - name: Install wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
         with:
