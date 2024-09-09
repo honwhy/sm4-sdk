@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sm4 sdk wasm demo</title>
+</head>
+
+<body>
+</body>
+
+<script type="module">
+    import init, { encrypt_to_base64, decrypt_from_base64 } from './pkg/sm4_sdk.js';
+
+    const run = async () => {
+        await init();
+        const origin = "hello world";
+        const encoded_str = encrypt_to_base64(origin);
+        console.log(encoded_str); // ${encoded_str}
+        const decoded_str = decrypt_from_base64(encoded_str);
+        console.log(decoded_str === origin);
+        appendResult(encoded_str);
+    }
+
+    run(); // checkout console for result
+    function appendResult(result) {
+        const codeElement = document.createElement('pre');
+        codeElement.innerHTML = `
+            <code>
+                import init, { encrypt_to_base64, decrypt_from_base64 } from './pkg/sm4_sdk.js';
+    
+                const run = async () => {
+                    await init();
+                    const origin = "hello world";
+                    const encoded_str = encrypt_to_base64(origin);
+                    console.log(encoded_str); // ${result}
+                    const decoded_str = decrypt_from_base64(encoded_str);
+                    console.log(decoded_str === origin);
+                    appendResult(encoded_str);
+                }
+    
+                run(); // checkout console for result
+            </code>
+        `;
+        document.body.appendChild(codeElement);
+    }
+</script>
+
+</html>
