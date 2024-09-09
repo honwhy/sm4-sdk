@@ -39,10 +39,10 @@ jobs:
 
       - name: Compress pkg directory
         run: |
-          zip -r pkg-${{ env.TAG_NAME }}.zip pkg
+          zip -r pkg.zip pkg
 
       - name: Upload artifact to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.SM4_SDK_TOKEN }}
-          files: pkg-${{ env.TAG_NAME }}.zip
+          files: pkg.zip
