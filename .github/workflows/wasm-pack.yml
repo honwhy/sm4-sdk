@@ -22,7 +22,7 @@ jobs:
         with:
           toolchain: stable
           profile: minimal
-          components: rustfmt, clippy
+          components: rustfmt, clippy, wasm-pack
           override: true
 
       - name: Build with wasm-pack
