@@ -1,0 +1,43 @@
+name: Wasm-pack on tag push
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  TAG_NAME: ${{ github.ref }}
+  SM4_SDK_KEY: ${{ secrets.SM4_SDK_KEY }}
+  SM4_SDK_IV: ${{ secrets.SM4_SDK_IV }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          components: rustfmt, clippy
+          override: true
+
+      - name: Build with wasm-pack
+        run: wasm-pack build --target web --out-dir pkg --out-name sm4_sdk --release
+
+      - name: Compress pkg directory
+        run: |
+          zip -r pkg.zip pkg
+
+      - name: Upload artifact to GitHub Releases
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.SM4_SDK_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: pkg.zip
+          asset_name: pkg-${{ env.TAG_NAME }}.zip
+          asset_content_type: application/zip
