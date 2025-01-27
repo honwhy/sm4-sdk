@@ -22,7 +22,7 @@ wasm-bindgen = "0.2.84"
 # code size when deploying.
 console_error_panic_hook = { version = "0.1.7", optional = true }
 smcrypto = "0.3.1"
-getrandom = { version = "0.2", features = ["js"] }
+getrandom = { version = "0.3", features = ["js"] }
 dotenv_codegen = "0.15.0"
 
 [dev-dependencies]
